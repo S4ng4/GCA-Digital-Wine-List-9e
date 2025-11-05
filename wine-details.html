@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wine Details - Gran Caffè L'Aquila</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --gold-light: #F4CF67;
+            --dark-gold: #B8860B;
+            --black: #0A0A0A;
+            --charcoal: #1A1A1A;
+            --ivory: #F5F5F0;
+            --cream: #F8F8F0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: visible;
+            font-family: 'Cormorant', serif;
+            background: var(--black);
+            color: var(--ivory);
+        }
+
+        .luxury-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--charcoal) 0%, var(--black) 100%);
+        }
+
+        /* Top Bar */
+        .wine-details-top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 20px;
+            background: rgba(26, 26, 26, 0.95);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+            flex-shrink: 0;
+        }
+
+        .wine-details-back-btn {
+            color: var(--gold);
+            font-size: 18px;
+            cursor: pointer;
+            transition: color 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .wine-details-back-btn:hover {
+            color: var(--gold-light);
+        }
+
+        .wine-details-top-title {
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--gold);
+            flex: 1;
+            text-align: center;
+        }
+
+        .wine-details-share-btn {
+            background: none;
+            border: none;
+            color: var(--gold);
+            font-size: 18px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .wine-details-share-btn:hover {
+            color: var(--gold-light);
+        }
+
+        /* Main Content */
+        .wine-details-container {
+            flex: 1;
+            overflow-y: visible;
+            overflow-x: hidden;
+            padding: 1.5rem;
+            display: grid;
+            grid-template-columns: 0.5fr 1fr;
+            gap: 2rem;
+            align-content: start;
+            align-items: stretch;
+        }
+
+        .wine-details-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .wine-details-container::-webkit-scrollbar-track {
+            background: rgba(245, 245, 240, 0.05);
+        }
+
+        .wine-details-container::-webkit-scrollbar-thumb {
+            background: rgba(212, 175, 55, 0.3);
+            border-radius: 3px;
+        }
+
+        /* Wine Details Content */
+        .wine-details-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 100%;
+        }
+
+        .wine-image-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+            height: 100%;
+        }
+
+        .wine-image {
+            width: 100%;
+            height: 100%;
+            min-height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(245, 245, 240, 0.05);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .wine-bottle {
+            font-size: 120px;
+            color: rgba(212, 175, 55, 0.4);
+        }
+
+        #wineBottleImage {
+            max-width: 70%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+        }
+
+        .wine-information {
+            width: 100%;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            margin-top: 1.5rem;
+            text-transform: uppercase;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 12px;
+        }
+
+        .info-item {
+            background: rgba(245, 245, 240, 0.05);
+            padding: 10px 12px;
+            border-left: 3px solid var(--gold);
+            border-radius: 4px;
+        }
+
+        .info-head {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .info-icon {
+            color: var(--gold);
+            font-size: 12px;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--gold);
+            display: block;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.25rem;
+        }
+
+        .info-value {
+            color: var(--ivory);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* Wine Info Section */
+        .wine-info-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            height: fit-content;
+        }
+
+        .wine-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--gold-light);
+            letter-spacing: 1px;
+            line-height: 1.3;
+            margin-bottom: 0.5rem;
+        }
+
+        .wine-description {
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--ivory);
+            background: rgba(245, 245, 240, 0.05);
+            padding: 1rem;
+            border-left: 3px solid var(--gold);
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .wine-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            font-size: 1rem;
+            padding: 1rem;
+            background: rgba(245, 245, 240, 0.03);
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+        }
+
+        .meta-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .meta-label {
+            color: var(--gold);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .meta-value {
+            color: var(--ivory);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        /* Tasting Notes */
+        .tasting-notes {
+            margin-top: 1rem;
+        }
+
+        .tasting-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+        }
+
+        .tasting-note {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 0.75rem;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--ivory);
+            transition: all 0.3s;
+        }
+
+        .tasting-note:hover {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--gold);
+        }
+
+        /* Tasting Category (for WineApp compatibility) */
+        .tasting-category {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 0.75rem;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--ivory);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .tasting-category:hover {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--gold);
+        }
+
+        .tasting-label {
+            font-weight: 600;
+            color: var(--gold);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tasting-value {
+            color: var(--ivory);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .elegant-message {
+            text-align: left;
+            padding: 1rem;
+        }
+
+        .elegant-message .tasting-label {
+            margin-bottom: 0.5rem;
+        }
+
+        .elegant-message .tasting-value {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Food Pairings */
+        .food-pairings {
+            margin-top: 1rem;
+        }
+
+        .pairing-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+        }
+
+        .pairing-item {
+            background: rgba(245, 245, 240, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            padding: 0.75rem;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--ivory);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .pairing-icon {
+            font-size: 18px;
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+
+        .pairing-name {
+            font-size: 0.9rem;
+            color: var(--ivory);
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* Producer Info */
+        .producer-info {
+            margin-top: 1rem;
+        }
+
+        .producer-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: var(--gold-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .producer-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--gold);
+        }
+
+        /* Share Section */
+        .share-wine-section {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .share-wine-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--dark-gold) 100%);
+            border: none;
+            color: var(--black);
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .share-wine-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Modal */
+        .share-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .share-modal.active {
+            display: flex;
+        }
+
+        .share-modal-content {
+            background: var(--charcoal);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 8px;
+            padding: 25px;
+            width: 90%;
+            max-width: 400px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .share-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .share-modal-header h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            font-size: 14px;
+        }
+
+        .close-share-modal {
+            background: none;
+            border: none;
+            color: var(--gold);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .share-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .share-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--ivory);
+            font-size: 10px;
+        }
+
+        .share-option:hover {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: var(--gold);
+        }
+
+        .share-option i {
+            font-size: 20px;
+            color: var(--gold);
+        }
+
+        .share-url-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+        }
+
+        .share-url-section label {
+            display: block;
+            font-size: 10px;
+            color: var(--gold);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .url-copy-container {
+            display: flex;
+            gap: 8px;
+        }
+
+        #shareUrl {
+            flex: 1;
+            padding: 8px;
+            background: rgba(245, 245, 240, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            color: var(--ivory);
+            border-radius: 4px;
+            font-size: 11px;
+        }
+
+        .copy-url-btn {
+            padding: 8px 12px;
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--gold);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .copy-url-btn:hover {
+            background: rgba(212, 175, 55, 0.3);
+        }
+
+        /* Footer */
+        .luxury-footer {
+            background: rgba(10, 10, 10, 0.8);
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            padding: 15px 20px;
+            flex-shrink: 0;
+            font-size: 14px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            color: var(--gold);
+        }
+
+        .footer-logo {
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            grid-column: 1 / -1;
+            font-size: 16px;
+        }
+
+        .footer-info p {
+            margin: 3px 0;
+            color: var(--ivory);
+            font-size: 14px;
+        }
+
+        .footer-info i {
+            color: var(--gold);
+            width: 14px;
+            font-size: 14px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-icons a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 16px;
+        }
+
+        .social-icons a:hover {
+            color: var(--gold-light);
+        }
+
+        .copyright {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: rgba(212, 175, 55, 0.5);
+            font-size: 12px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .wine-details-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="hero-enhanced">
+    <div class="luxury-container">
+        <!-- Top Bar -->
+        <div class="wine-details-top-bar">
+            <a href="#" class="wine-details-back-btn" id="backButton">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            <h1 class="wine-details-top-title">WINE DETAILS</h1>
+            <button class="wine-details-share-btn" id="shareWineBtnTop">
+                <i class="fas fa-share-alt"></i>
+            </button>
+        </div>
+
+        <!-- Main Content -->
+        <main class="wine-details-container">
+            <!-- Left Column -->
+            <div class="wine-details-content">
+                <div class="wine-image-section">
+                    <div class="wine-image" id="wineImageContainer">
+                        <i class="fas fa-wine-bottle wine-bottle" id="wineBottleIcon"></i>
+                        <img id="wineBottleImage" src="" alt="Wine bottle">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="wine-info-section">
+                <h1 class="wine-name" id="wineName">Brunello di Montalcino</h1>
+                
+                <div class="wine-description" id="wineDescription">
+                    A masterpiece of elegance and complexity, this wine presents layers of dark fruit with subtle oak undertones.
+                </div>
+                
+                <div class="wine-meta" id="wineMeta">
+                    <div class="meta-item">
+                        <span class="meta-label">ABV</span>
+                        <span class="meta-value">14.5%</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Producer</span>
+                        <span class="meta-value">Estate Tenuta</span>
+                    </div>
+                </div>
+                
+                <div class="wine-information" id="wineInformation">
+                    <h2 class="section-title">Info</h2>
+                    <div class="info-grid" id="infoGrid">
+                        <div class="info-item">
+                            <span class="info-label">Vintage</span>
+                            <span class="info-value">2018</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Region</span>
+                            <span class="info-value">Tuscany</span>
+                    </div>
+                </div>
+            </div>
+
+                <!-- Tasting Notes -->
+            <div class="tasting-notes" id="tastingNotes">
+                <h2 class="section-title">Tasting Notes</h2>
+                <div class="tasting-grid" id="tastingGrid">
+                    <div class="tasting-note">Cherry</div>
+                    <div class="tasting-note">Oak</div>
+                    <div class="tasting-note">Spice</div>
+                    <div class="tasting-note">Leather</div>
+                </div>
+            </div>
+
+                <!-- Food Pairings -->
+            <div class="food-pairings" id="foodPairings">
+                <h2 class="section-title">Pairings</h2>
+                <div class="pairing-list" id="pairingList">
+                    <div class="pairing-item">Beef</div>
+                    <div class="pairing-item">Game</div>
+                    <div class="pairing-item">Hard Cheese</div>
+                </div>
+            </div>
+
+                <!-- Producer Info -->
+            <div class="producer-info" id="producerInfo">
+                <h2 class="section-title">Producer</h2>
+                <h3 class="producer-name" id="producerName">Tenuta Tradizionale</h3>
+                <p class="producer-description" id="producerDescription">
+                    A family-owned estate dedicated to producing exceptional wines through sustainable and traditional methods.
+                </p>
+            </div>
+
+                <!-- Share Button -->
+            <div class="share-wine-section">
+                <button class="share-wine-btn" id="shareWineBtn">
+                    <i class="fas fa-share-alt"></i> SHARE WINE
+                </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="luxury-footer">
+            <div class="footer-content">
+                <div class="footer-logo">GRAN CAFFÈ L'AQUILA</div>
+                <div class="footer-info">
+                    <p><i class="fas fa-map-marker-alt"></i> 1716 Chestnut St</p>
+                    <p><i class="fas fa-phone"></i> +1 (215) 568-5600</p>
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+                <div class="copyright">
+                    <p>&copy; 2023 Gran Caffè L'Aquila</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Share Modal -->
+    <div class="share-modal" id="shareModal">
+        <div class="share-modal-content">
+            <div class="share-modal-header">
+                <h3>Share this Wine</h3>
+                <button class="close-share-modal" id="closeShareModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="share-options">
+                <div class="share-option" id="shareFacebook">
+                    <i class="fab fa-facebook-f"></i>
+                    <span>Facebook</span>
+                </div>
+                <div class="share-option" id="shareInstagram">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                </div>
+                <div class="share-option" id="shareTwitter">
+                    <i class="fab fa-twitter"></i>
+                    <span>Twitter</span>
+                </div>
+                <div class="share-option" id="shareWhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                </div>
+                <div class="share-option" id="shareEmail">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email</span>
+                </div>
+                <div class="share-option" id="shareSMS">
+                    <i class="fas fa-sms"></i>
+                    <span>SMS</span>
+                </div>
+            </div>
+            <div class="share-url-section">
+                <label for="shareUrl">Share Link:</label>
+                <div class="url-copy-container">
+                    <input type="text" id="shareUrl" readonly>
+                    <button class="copy-url-btn" id="copyUrlBtn">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/main.js"></script>
+    <script>
+        // Share Modal functionality (handled by main.js ShareWineManager, but keeping as fallback)
+        document.addEventListener('DOMContentLoaded', () => {
+        const shareWineBtn = document.getElementById('shareWineBtn');
+        const shareWineBtnTop = document.getElementById('shareWineBtnTop');
+        const shareModal = document.getElementById('shareModal');
+        const closeShareModal = document.getElementById('closeShareModal');
+
+            if (shareWineBtn && shareModal) {
+        shareWineBtn.addEventListener('click', () => shareModal.classList.add('active'));
+            }
+            if (shareWineBtnTop && shareModal) {
+        shareWineBtnTop.addEventListener('click', () => shareModal.classList.add('active'));
+            }
+            if (closeShareModal && shareModal) {
+        closeShareModal.addEventListener('click', () => shareModal.classList.remove('active'));
+            }
+            if (shareModal) {
+        shareModal.addEventListener('click', (e) => {
+            if (e.target === shareModal) shareModal.classList.remove('active');
+        });
+            }
+
+        // Copy URL
+            const copyUrlBtn = document.getElementById('copyUrlBtn');
+            if (copyUrlBtn) {
+                copyUrlBtn.addEventListener('click', () => {
+            const url = document.getElementById('shareUrl');
+                    if (url) {
+            url.select();
+                        try {
+            document.execCommand('copy');
+            alert('Link copied!');
+                        } catch (err) {
+                            // Fallback for modern browsers
+                            navigator.clipboard.writeText(url.value).then(() => {
+                                alert('Link copied!');
+                            }).catch(() => {
+                                console.error('Failed to copy URL');
+                            });
+                        }
+                    }
+                });
+            }
+
+            // Set share URL
+            const shareUrl = document.getElementById('shareUrl');
+            if (shareUrl) {
+                shareUrl.value = window.location.href;
+            }
+
+            // Back Button handler - set href if not already set by WineApp
+            const backButton = document.getElementById('backButton');
+            if (backButton) {
+                // Wait for WineApp to set the href, or set it ourselves if not set
+                const checkBackButton = () => {
+                    if (backButton.href === '#' || backButton.href.endsWith('#')) {
+                        // Set default back URL
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const type = urlParams.get('type');
+                        
+                        let backUrl = './index.html';
+                        const params = new URLSearchParams();
+                        
+                        // Try to get region from wine data if available
+                        if (window.wineApp && window.wineApp.wines) {
+                            const wineId = urlParams.get('id');
+                            if (wineId) {
+                                const wine = window.wineApp.wines.find(w => 
+                                    w.wine_number === wineId || 
+                                    w.wine_number === String(wineId) || 
+                                    String(w.wine_number) === String(wineId)
+                                );
+                                if (wine && wine.region) {
+                                    params.set('region', wine.region);
+                                }
+                            }
+                        }
+                        
+                        if (type) {
+                            params.set('type', type);
+                        }
+                        
+                        if (params.toString()) {
+                            backUrl += `?${params.toString()}`;
+                        }
+                        
+                        backButton.href = backUrl;
+                    }
+                };
+                
+                // Check immediately and after a delay to allow WineApp to set it
+                checkBackButton();
+                setTimeout(checkBackButton, 500);
+                
+                // Also handle click event as fallback
+                backButton.addEventListener('click', (e) => {
+                    if (backButton.href === '#' || backButton.href.endsWith('#')) {
+                        e.preventDefault();
+                        checkBackButton();
+                        // Navigate after setting href
+                        setTimeout(() => {
+                            window.location.href = backButton.href;
+                        }, 100);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

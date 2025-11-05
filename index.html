@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gran Caffè L'Aquila - Wine Collection</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="home-page">
+    <!-- Luxury Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" aria-hidden="true">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <img src="./image/gcaLogo.png" alt="Gran Caffè L'Aquila Logo" class="loading-logo-image">
+                <div class="countdown-ring" aria-hidden="true">
+                    <svg viewBox="0 0 120 120">
+                        <defs>
+                            <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#D4AF37" />
+                                <stop offset="100%" stop-color="#B8860B" />
+                            </linearGradient>
+                        </defs>
+                        <circle class="ring-bg" cx="60" cy="60" r="54" />
+                        <circle class="ring-fg" id="ringProgress" cx="60" cy="60" r="54" />
+                    </svg>
+                </div>
+                <div class="loading-message" id="loadingMessage" aria-live="polite">Caricamento…</div>
+            </div>
+            <div class="loading-extras">
+                <div class="gold-bokeh"><span></span><span></span><span></span></div>
+            </div>
+                </div>
+            </div>
+            
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Mobile Side Menu -->
+    <nav class="mobile-side-menu" id="mobileSideMenu">
+        <div class="mobile-menu-header">
+            <button class="mobile-menu-close" id="mobileMenuClose">
+                <i class="fas fa-arrow-left"></i>
+                <span>Close</span>
+            </button>
+            <h2 class="mobile-menu-title">WINE CATEGORIES</h2>
+        </div>
+        <div class="mobile-menu-categories" id="mobileMenuCategories">
+            <!-- Wine categories will be populated dynamically -->
+        </div>
+    </nav>
+
+    <div class="main-layout">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <!-- Mobile Menu Button (visible on mobile only) -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="logo" onclick="window.location.href='./index.html'">
+                <img src="./image/gcaLogo.png" alt="Gran Caffè L'Aquila Logo" class="logo-image">
+            </div>
+            <div class="nav-title-section">
+                <h1 class="nav-title">Gran Caffè L'Aquila</h1>
+                <p class="nav-subtitle">Fine Wine Collection</p>
+            </div>
+            
+            <!-- Mobile Search Button (visible on mobile only) -->
+            <button class="mobile-search-btn" id="mobileSearchBtn" aria-label="Search">
+                <i class="fas fa-search"></i>
+            </button>
+        </nav>
+
+        <!-- Mobile Search Bar (positioned below nav on mobile only) -->
+        <div class="mobile-search-bar-container" id="mobileSearchBarContainer">
+            <div class="mobile-search-wrapper">
+                <div class="mobile-search-input-wrapper">
+                    <i class="fas fa-search mobile-search-icon"></i>
+                    <input type="text" class="mobile-search-input" placeholder="Search wines by name, region, or varietal..." id="mobileSearchInput">
+                </div>
+                <div class="mobile-filter-buttons">
+                    <button class="mobile-filter-btn" id="mobileFilterRegionBtn">Region</button>
+                    <button class="mobile-filter-btn" id="mobileFilterVarietalBtn">Varietal</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Wine Type Selector (positioned below nav on mobile) -->
+        <div class="mobile-wine-type-selector" id="mobileWineTypeSelector">
+            <div class="mobile-wine-types-scroll" id="mobileWineTypesScroll">
+                <!-- Wine type chips will be populated dynamically -->
+            </div>
+        </div>
+
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
+            <!-- Mobile Map and Wines Container (visible on mobile only) -->
+            <div class="mobile-map-wines-container" id="mobileMapWinesContainer">
+                <!-- Mobile Map View -->
+                <div class="mobile-map-view" id="mobileMapView">
+                    <div class="mobile-map-wrapper" id="mobileMapWrapper">
+                        <div id="mobileMap"></div>
+                        <div class="mobile-region-info" id="mobileRegionInfo" style="display: none;">
+                            <h3 id="mobileRegionName">Region Name</h3>
+                            <p><strong>Capital:</strong> <span id="mobileRegionCapital">-</span></p>
+                            <p><strong>Population:</strong> <span id="mobileRegionPopulation">-</span></p>
+                            <p><strong>Area:</strong> <span id="mobileRegionArea">-</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Wines Cards Container (shown when region is clicked) -->
+                <div class="mobile-wines-cards-container" id="mobileWinesCardsContainer" style="display: none;">
+                    <div class="mobile-wines-cards-header">
+                        <button class="mobile-back-to-map-btn" id="mobileBackToMapBtn">
+                            <i class="fas fa-arrow-left"></i>
+                            <span>Back to Map</span>
+                        </button>
+                        <h2 class="mobile-wines-cards-title" id="mobileWinesCardsTitle">Wines</h2>
+                    </div>
+                    <div class="mobile-wines-cards-grid" id="mobileWinesCardsGrid">
+                        <!-- Wine cards will be populated dynamically -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Views Container (hidden on mobile - map is shown instead) -->
+            <div class="mobile-views-container" id="mobileViewsContainer" style="display: none;">
+                <!-- Mobile Regions View -->
+                <div class="mobile-view mobile-view-active" id="mobileRegionsView">
+                    <div class="mobile-view-header">
+                        <button class="mobile-back-btn" id="mobileBackToCategories" style="display: none;">
+                            <i class="fas fa-chevron-left"></i>
+                            <span>Categories</span>
+                        </button>
+                        <h2 class="mobile-view-title" id="mobileRegionsTitle">Select Wine Category</h2>
+                    </div>
+                    <div class="mobile-regions-list" id="mobileRegionsList">
+                        <!-- Regions will be populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Mobile Wines View -->
+                <div class="mobile-view" id="mobileWinesView">
+                    <div class="mobile-region-background" id="mobileRegionBackground"></div>
+                    <div class="mobile-view-content">
+                        <div class="mobile-view-header">
+                            <button class="mobile-back-btn" id="mobileBackToRegions">
+                                <i class="fas fa-chevron-left"></i>
+                                <span>Regions</span>
+                            </button>
+                            <h2 class="mobile-view-title" id="mobileWinesTitle"></h2>
+                        </div>
+                        <div class="mobile-wines-list" id="mobileWinesList">
+                            <!-- Wines will be populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar (desktop only) -->
+            <aside class="sidebar">
+                <div class="sidebar-title">Wine Categories</div>
+                <div class="wine-categories">
+                    <div class="wine-card-sidebar" data-type="ROSSO">
+                        <div class="wine-icon-sidebar">
+                            <img src="./image/glassRed.png" alt="Red wine icon">
+                        </div>
+                        <div class="wine-card-title">Red Wines</div>
+                        <div class="wine-card-subtitle">Bold & Complex</div>
+                        <div class="wine-card-count">Loading...</div>
+                    </div>
+
+                    <div class="wine-card-sidebar" data-type="BIANCO">
+                        <div class="wine-icon-sidebar">
+                            <img src="./image/glassWhite.png" alt="White wine icon">
+                        </div>
+                        <div class="wine-card-title">White Wines</div>
+                        <div class="wine-card-subtitle">Crisp & Refreshing</div>
+                        <div class="wine-card-count">Loading...</div>
+                    </div>
+
+                    <div class="wine-card-sidebar" data-type="ROSATO">
+                        <div class="wine-icon-sidebar">
+                            <img src="./image/glRose.png" alt="Rosé wine icon">
+                        </div>
+                        <div class="wine-card-title">Rosé Wines</div>
+                        <div class="wine-card-subtitle">Elegant & Delicate</div>
+                        <div class="wine-card-count">Loading...</div>
+                    </div>
+
+                    <div class="wine-card-sidebar" data-type="ARANCIONE">
+                        <div class="wine-icon-sidebar">
+                            <img src="./image/glArancione.png" alt="Orange wine icon">
+                        </div>
+                        <div class="wine-card-title">Orange Wines</div>
+                        <div class="wine-card-subtitle">Skin-Contact Whites</div>
+                        <div class="wine-card-count">Loading...</div>
+                    </div>
+
+                    <div class="wine-card-sidebar" data-type="BOLLICINE">
+                        <div class="wine-icon-sidebar">
+                            <img src="./image/glSparkling.png" alt="Sparkling wine icon">
+                        </div>
+                        <div class="wine-card-title">Sparkling</div>
+                        <div class="wine-card-subtitle">Celebratory & Vibrant</div>
+                        <div class="wine-card-count">Loading...</div>
+                    </div>
+
+                    <div class="wine-card-sidebar" data-type="NON ALCOLICO">
+                        <div class="wine-icon-sidebar">
+                            <img src="./image/gl00.png" alt="Non-alcoholic wine icon">
+                        </div>
+                        <div class="wine-card-title">Non-Alcoholic</div>
+                        <div class="wine-card-subtitle">Zero Alcohol Selection</div>
+                        <div class="wine-card-count">Loading...</div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Regions Panel -->
+            <aside class="regions-panel" id="regionsPanel">
+                <div class="regions-panel-header">
+                    <div class="regions-panel-title" id="regionsPanelTitle">Regions</div>
+                    <div class="regions-panel-subtitle" id="regionsPanelSubtitle">Select a region</div>
+                </div>
+                <div class="regions-list" id="regionsList">
+                    <!-- Regions will be loaded here dynamically -->
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <div style="display: flex; flex-direction: column; flex: 1; overflow: hidden; min-height: 0;" class="main-content-desktop">
+                <!-- Search Bar -->
+                <div class="search-bar-container">
+                    <div class="search-wrapper">
+                        <div class="search-input-wrapper">
+                            <input type="text" class="search-input luxury-search-input" placeholder="Search wines by name, region, or varietal...">
+                        </div>
+                        <button class="btn-filter luxury-filter-btn">Filter by Region</button>
+                        <button class="btn-filter luxury-filter-btn">Filter by Varietal</button>
+                    </div>
+                    </div>
+                    
+                <!-- Map Container -->
+                <div class="map-wrapper" id="mapWrapper">
+                    <div id="map"></div>
+                    <div class="region-info" id="regionInfo">
+                        <h3 id="regionName">Region Name</h3>
+                        <p><strong>Capital:</strong> <span id="regionCapital">-</span></p>
+                        <p><strong>Population:</strong> <span id="regionPopulation">-</span></p>
+                        <p><strong>Area:</strong> <span id="regionArea">-</span></p>
+                        <p id="regionFact" class="region-fact">-</p>
+                        <p id="regionWineFacts" class="region-wine-facts">-</p>
+                    </div>
+                    
+                    <!-- Region name tooltip on hover -->
+                    <div class="region-tooltip" id="regionTooltip"></div>
+                </div>
+                
+                <!-- Wines List Container (replaces map when region is clicked) -->
+                <div class="wines-list-container" id="winesListContainer" style="display: none;">
+                    <div class="wines-list-header">
+                        <button class="btn-back-to-map" id="backToMapBtn">
+                            <i class="fas fa-arrow-left"></i> Back to Map
+                        </button>
+                        <div class="wines-list-title-section">
+                            <h2 class="wines-list-title" id="winesListTitle">Wines</h2>
+                            <p class="wines-list-subtitle" id="winesListSubtitle">Select a wine to view details</p>
+                        </div>
+                    </div>
+                    <div class="wines-grid-container" id="winesGridContainer">
+                        <!-- Wines will be loaded here dynamically -->
+                    </div>
+                </div>
+        </div>
+
+            <!-- Wines Panel -->
+            <aside class="wines-panel" id="winesPanel">
+                <div class="wines-panel-header">
+                    <div class="wines-panel-title" id="winesPanelTitle">Wines</div>
+                    <div class="wines-panel-subtitle" id="winesPanelSubtitle">Select a wine</div>
+                </div>
+                <div class="wines-list" id="winesList">
+                    <!-- Wines will be loaded here dynamically -->
+                </div>
+            </aside>
+            </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="./js/main.js"></script>
+</html>

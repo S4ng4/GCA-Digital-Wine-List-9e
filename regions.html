@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wine Regions - Gran Caffè L'Aquila</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body class="hero-enhanced">
+    <div class="luxury-container">
+        <header class="luxury-header">
+            <div class="header-content">
+                <a href="./index.html" class="back-button">
+                    <i class="fas fa-chevron-left"></i>
+                    Back to Main
+                </a>
+                <div class="logo-container">
+                    <div class="luxury-logo small has-image">
+                        <img src="./image/gcaLogo.png" alt="Gran Caffè L'Aquila Logo" class="logo-image">
+                    </div>
+                    <h1 class="luxury-title medium">GRAN CAFFÈ L'AQUILA</h1>
+                    <p class="luxury-subtitle medium">present</p>
+                    <p class="luxury-subtitle medium">WINE REGIONS</p>
+                </div>
+                <div class="luxury-search-container">
+                    <div class="luxury-search-bar">
+                        <input type="text" class="luxury-search-input" placeholder="Search regions...">
+                        <button class="luxury-filter-btn">Filter by Region</button>
+                        <button class="luxury-filter-btn">Filter by Varietal</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="breadcrumb">
+            <a href="./index.html">Home</a>
+            <i class="fas fa-chevron-right"></i>
+            <span>Wine Regions</span>
+        </div>
+
+        <div class="view-toggle">
+            <button class="view-btn active" id="gridViewBtn">
+                <i class="fas fa-th-large"></i> Grid View
+            </button>
+            <button class="view-btn" id="tableViewBtn">
+                <i class="fas fa-table"></i> Table View
+            </button>
+        </div>
+
+        <main class="regions-container">
+            <div class="regions-header">
+                <h2 class="regions-title">SELECT A REGION</h2>
+                <p class="regions-count">Loading...</p>
+            </div>
+            
+            <!-- Grid View -->
+            <div class="regions-grid" id="regionsGrid">
+                <!-- Regions will be dynamically loaded here -->
+            </div>
+
+            <!-- Table View -->
+            <div class="regions-table-container" id="regionsTable">
+                <table class="regions-table">
+                    <thead>
+                        <tr>
+                            <th>Region Name</th>
+                            <th>Wine Count</th>
+                            <th>Description</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="4" class="loading">Loading regions...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+        <footer class="luxury-footer">
+            <div class="footer-content">
+                <div class="footer-logo">GRAN CAFFÈ L'AQUILA</div>
+                <div class="footer-info">
+                    <p><i class="fas fa-map-marker-alt"></i> 1716 Chestnut St, Philadelphia, PA</p>
+                    <p><i class="fas fa-phone"></i> +1 (215) 568-5600</p>
+                    <p><i class="fas fa-envelope"></i> info@grancaffelaquila.com</p>
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+                <div class="copyright">
+                    <p>&copy; 2023 Gran Caffè L'Aquila. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="./js/main.js"></script>
+</body>
+</html>
