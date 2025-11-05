@@ -6,7 +6,6 @@
     <title>Wine Details - Gran Caffè L'Aquila</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/style.css">
     <style>
         :root {
             --gold: #D4AF37;
@@ -560,7 +559,7 @@
             border-top: 1px solid rgba(212, 175, 55, 0.1);
             padding: 15px 20px;
             flex-shrink: 0;
-            font-size: 14px;
+            font-size: 10px;
         }
 
         .footer-content {
@@ -575,19 +574,16 @@
             font-weight: 600;
             letter-spacing: 1px;
             grid-column: 1 / -1;
-            font-size: 16px;
         }
 
         .footer-info p {
             margin: 3px 0;
             color: var(--ivory);
-            font-size: 14px;
         }
 
         .footer-info i {
             color: var(--gold);
-            width: 14px;
-            font-size: 14px;
+            width: 12px;
         }
 
         .social-icons {
@@ -599,7 +595,6 @@
             color: var(--gold);
             text-decoration: none;
             transition: color 0.3s;
-            font-size: 16px;
         }
 
         .social-icons a:hover {
@@ -610,7 +605,7 @@
             grid-column: 1 / -1;
             text-align: center;
             color: rgba(212, 175, 55, 0.5);
-            font-size: 12px;
+            font-size: 9px;
         }
 
         /* Responsive adjustments */
@@ -785,7 +780,7 @@
         </div>
     </div>
 
-    <script src="./js/main.js"></script>
+    <script src="js/main.js"></script>
     <script>
         // Share Modal functionality (handled by main.js ShareWineManager, but keeping as fallback)
         document.addEventListener('DOMContentLoaded', () => {
@@ -847,7 +842,7 @@
                         const urlParams = new URLSearchParams(window.location.search);
                         const type = urlParams.get('type');
                         
-                        let backUrl = './index.html';
+                        let backUrl = 'index.html';
                         const params = new URLSearchParams();
                         
                         // Try to get region from wine data if available
